@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stroke Prediction System</title>
+<style>
+:root{--bg:#071827;--panel:#0d2639;--panel2:#102f46;--cyan:#22d3ee;--blue:#2878dc;--text:#eaf6ff;--muted:#9bb4c8;--line:#20435b;--green:#36d399;--red:#fb7185}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% 0%,#123b5b 0,transparent 35%),var(--bg);color:var(--text);font:15px Arial,sans-serif}
+header{position:sticky;top:0;z-index:5;background:#071827ed;border-bottom:1px solid var(--line);padding:16px 5%;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{font-weight:800;letter-spacing:.5px}.brand span{color:var(--cyan)}nav{display:flex;gap:8px;flex-wrap:wrap}button,.navbtn{border:1px solid var(--line);background:transparent;color:var(--text);padding:10px 14px;border-radius:9px;cursor:pointer}button:hover,.navbtn.active{background:#16415c;border-color:var(--cyan)}
+main{max-width:1150px;margin:auto;padding:34px 5% 70px}.page{display:none}.page.active{display:block}
+.eyebrow{color:var(--cyan);font-size:12px;font-weight:bold;letter-spacing:2px;text-transform:uppercase}
+h1{font-size:clamp(32px,6vw,58px);margin:12px 0}h2{font-size:27px;margin:8px 0 22px}p{color:var(--muted);line-height:1.65}
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:25px;align-items:center;min-height:430px}
+.hero-art{border:1px solid var(--line);border-radius:24px;background:linear-gradient(145deg,#103653,#071827);padding:35px;text-align:center;font-size:100px}
+.primary{background:linear-gradient(90deg,#1679d5,#12b9ce);border:0;font-weight:bold;padding:13px 20px;margin-top:14px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:22px 0}
+.card{background:linear-gradient(145deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:15px;padding:19px}
+.metric{font-size:29px;font-weight:800;margin-top:10px}.muted{color:var(--muted);font-size:13px}
+.layout{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.section{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:22px;margin:15px 0}
+label{display:block;color:#c6d9e8;font-size:13px;margin:12px 0 6px}
+input,select{width:100%;padding:12px;border:1px solid #31546a;background:#071b2a;color:white;border-radius:8px;outline:none}
+input:focus,select:focus{border-color:var(--cyan)}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.result{display:none;margin-top:18px;padding:18px;border-radius:12px;background:#102f46;border:1px solid var(--cyan)}
+.bar{height:12px;background:#24465a;border-radius:20px;overflow:hidden;margin:10px 0}.bar span{display:block;height:100%;background:linear-gradient(90deg,#22d3ee,#2878dc);width:0}
+.chart{display:flex;align-items:end;gap:14px;height:180px;padding:18px 5px 0;border-bottom:1px solid var(--line)}
+.colbar{flex:1;background:linear-gradient(#22d3ee,#2878dc);border-radius:7px 7px 0 0;min-height:8px;position:relative}
+.colbar small{position:absolute;bottom:-24px;left:50%;transform:translateX(-50%);white-space:nowrap;color:var(--muted)}
+footer{text-align:center;border-top:1px solid var(--line);padding:25px;color:var(--muted);font-size:13px}
+.notice{border-left:3px solid #fbbf24;padding:12px 15px;background:#352d1a;color:#fce7a3;border-radius:6px;font-size:13px;line-height:1.5}
+@media(max-width:750px){.hero,.layout{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr}.hero-art{font-size:70px}.formgrid{grid-template-columns:1fr}header{align-items:flex-start;flex-direction:column}}
+@media(max-width:420px){.cards{grid-template-columns:1fr 1fr}nav button{padding:8px;font-size:12px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand">🧠 STROKE <span>PREDICTION</span></div>
+ <nav>
+  <button class="navbtn active" onclick="showPage('home',this)">Home</button>
+  <button class="navbtn" onclick="showPage('dashboard',this)">Dashboard</button>
+  <button class="navbtn" onclick="showPage('predict',this)">Prediction</button>
+  <button class="navbtn" onclick="showPage('about',this)">About</button>
+ </nav>
+</header>
+<main>
+<section id="home" class="page active">
+ <div class="hero">
+  <div><div class="eyebrow">Machine Learning Project</div>
+   <h1>Stroke Prediction <span style="color:var(--cyan)">System</span></h1>
+   <p>An educational demonstration of how patient information and data analysis can be presented in a stroke-risk prediction project.</p>
+   <button class="primary" onclick="showPage('predict')">Explore Prediction →</button>
+  </div>
+  <div class="hero-art">🧠<div style="font-size:15px;color:var(--cyan);letter-spacing:2px">HEALTH DATA • AI • INSIGHTS</div></div>
+ </div>
+ <div class="notice">Educational demo only: this website does not diagnose stroke or calculate a clinically valid risk. For health concerns, consult a qualified healthcare professional.</div>
+</section>
+
+<section id="dashboard" class="page">
+ <div class="eyebrow">Overview</div><h2>Project Dashboard</h2>
+ <div class="cards">
+  <div class="card"><div class="muted">Dataset Records</div><div class="metric">5,110</div><div class="muted">Sample project figure</div></div>
+  <div class="card"><div class="muted">Total Features</div><div class="metric">12</div><div class="muted">Input attributes</div></div>
+  <div class="card"><div class="muted">Model Types</div><div class="metric">5</div><div class="muted">Illustrative list</div></div>
+  <div class="card"><div class="muted">Project Status</div><div class="metric" style="color:var(--green)">Demo</div><div class="muted">Frontend version</div></div>
+ </div>
+ <div class="layout">
+  <div class="section"><h3>Sample Data Distribution</h3><p>Illustrative chart — not actual patient statistics.</p>
+   <div class="chart"><div class="colbar" style="height:75%"><small>Age</small></div><div class="colbar" style="height:48%"><small>BMI</small></div><div class="colbar" style="height:88%"><small>Glucose</small></div><div class="colbar" style="height:60%"><small>Work</small></div><div class="colbar" style="height:38%"><small>Other</small></div></div>
+  </div>
+  <div class="section"><h3>Project Information</h3><p><b>Technology:</b> Python, Pandas, NumPy, Matplotlib, Seaborn, Scikit-learn</p><p><b>Purpose:</b> Demonstrate a machine-learning project interface.</p><p><b>Output:</b> Educational sample visualization.</p></div>
+ </div>
+</section>
+
+<section id="predict" class="page">
+ <div class="eyebrow">Demo interface</div><h2>Patient Information</h2>
+ <p>Enter sample values to see how a prediction-result screen works. Do not enter real personal medical information.</p>
+ <div class="layout">
+  <div class="section">
+   <form id="patientForm">
+    <div class="formgrid">
+     <div><label>Age</label><input type="number" id="age" min="1" max="120" placeholder="e.g. 45" required></div>
+     <div><label>Gender</label><select id="gender"><option>Male</option><option>Female</option><option>Other</option></select></div>
+     <div><label>Hypertension</label><select id="hyper"><option value="0">No</option><option value="1">Yes</option></select></div>
+     <div><label>Heart Disease</label><select id="heart"><option value="0">No</option><option value="1">Yes</option></select></div>
+     <div><label>Average Glucose Level</label><input type="number" id="glucose" min="1" max="500" step=".1" placeholder="e.g. 100" required></div>
+     <div><label>BMI</label><input type="number" id="bmi" min="1" max="100" step=".1" placeholder="e.g. 25" required></div>
+     <div><label>Work Type</label><select><option>Private</option><option>Self-employed</option><option>Government</option><option>Children</option><option>Never worked</option></select></div>
+     <div><label>Residence Type</label><select><option>Urban</option><option>Rural</option></select></div>
+     <div><label>Smoking Status</label><select><option>Never smoked</option><option>Formerly smoked</option><option>Smokes</option><option>Unknown</option></select></div>
+     <div><label>Marital Status</label><select><option>Yes</option><option>No</option></select></div>
+    </div>
+    <button class="primary" type="submit">Show Demo Result</button>
+   </form>
+   <div class="result" id="result"><h3 id="resultTitle">Demo result</h3><p id="resultText"></p><div class="bar"><span id="resultBar"></span></div><small id="resultPercent"></small><p class="muted">This is a randomly generated interface demonstration, not a medical prediction.</p></div>
+  </div>
+  <div class="section"><h3>How it works</h3><p>1. Enter sample patient attributes.</p><p>2. Submit the form.</p><p>3. A demonstration result is displayed.</p><p>4. A real project would send the data to a validated trained model through a secure backend.</p><div class="notice">The demo result is not suitable for medical decisions. It does not estimate your actual stroke risk.</div></div>
+ </div>
+</section>
+
+<section id="about" class="page">
+ <div class="eyebrow">Project details</div><h2>About This Project</h2>
+ <div class="section"><h3>Stroke Prediction Using Machine Learning</h3><p>This student-project style interface presents an introduction, dashboard, sample data visualization and a patient-input demonstration.</p><p><b>Frontend:</b> HTML, CSS and JavaScript.</p><p><b>Suggested backend for a future version:</b> Python with Flask or Streamlit and a properly trained, evaluated machine-learning model.</p><p><b>Team Lead:</b> Add your name here.</p><p><b>Team Members:</b> Add team member names here.</p></div>
+ <div class="section"><h3>Thank You!</h3><p>Early awareness and professional medical care matter. This project is for learning and demonstration purposes only.</p></div>
+</section>
+</main>
+<footer>STROKE PREDICTION SYSTEM • STUDENT PROJECT DEMO<br>Built with HTML, CSS & JavaScript</footer>
+<script>
+function showPage(id,btn){
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('.navbtn').forEach(b=>b.classList.remove('active'));
+ if(btn) btn.classList.add('active');
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+document.getElementById('patientForm').addEventListener('submit',function(e){
+ e.preventDefault();
+ // Random percentage is intentionally used only as a UI demo, not as a medical model.
+ const demoValue=Math.floor(Math.random()*71)+10;
+ document.getElementById('result').style.display='block';
+ document.getElementById('resultTitle').textContent='Demo output generated';
+ document.getElementById('resultText').textContent='Your sample form was submitted successfully. The value below is randomly generated for interface testing only.';
+ document.getElementById('resultBar').style.width=demoValue+'%';
+ document.getElementById('resultPercent').textContent='Illustrative demo indicator: '+demoValue+'% (not a stroke-risk score)';
+ document.getElementById('result').scrollIntoView({behavior:'smooth',block:'nearest'});
+});
+</script>
+</body>
+</html>
